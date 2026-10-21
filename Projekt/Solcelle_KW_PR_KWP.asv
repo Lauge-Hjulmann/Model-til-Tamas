@@ -1,0 +1,18 @@
+
+
+%Okay, først angives anlæggesstørrelse i kWp, som en variabel vi altid kan
+%ændre i:
+kWp_installeret = 100; 
+
+%Indlæser nu vores data fra excelfilen:
+filename = 'PV_clean_PV_data';
+data = readtable(filename, 'sheet', 'PV_data');
+
+%Udtrækker den specifikke effekt og ganger med 1000 for at få Watt:
+P_tot_W = data.P_kW_per_kWp * kWp_installeret * 1000;
+
+%Skal have en tidtager, som gøres over hver time i sekunder:
+tid_sek = (0:height(data)-1)' * 3600;
+
+%Opretter et timeseries-objekt, som simulink kan forstå:
+pv_sig
